@@ -1,0 +1,34 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+define('WRAPPER_TYPE','archived');
+function getFiles($file){
+	//getting the real name
+		$file = vfs('getRealName',array($file));
+		$content = array();
+
+		//File names
+		$content['names'] = eyeFileArchive('list',array($file));
+
+		//FilePath
+		foreach($content['names'] as $fileName){
+			$content['path'][] = $file.$fileName;
+		}
+		return $content;
+}
+
+function getFileType(){
+	return WRAPPER_TYPE;
+}
+?>

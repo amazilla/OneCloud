@@ -1,0 +1,47 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+function eyeArchive_on_Compress($params){
+
+	if(isset($params['workingPath'][0]) && !empty($params['workingPath'][0])){
+		$dest = $params['workingPath'][0];
+	}else{
+		$dest = $GLOBALS['workingPath']->text;
+	}
+
+	$type = substr(strrchr($dest, '.'), 1); // utf8
+	$types = eyeFileArchive('supportedTypes');
+	if(array_search($type,$types) === false){
+		eyex('messageBox',array('content'=>'The compress type is not supported'));
+		return false;
+	}
+	$dest = um('getCurrentUserDir').'/'.FILES_USER_DIR.'/'.$dest;
+
+	$myProject = _eyeArchive_getProject();
+	$path = $myProject->getFilesName();
+	array_unshift($path,$myProject->getSrc());
+	$fpath[] = $path;
+	$params[0] = array(
+					'archived'=>$fpath
+					);
+	$params[1] = $dest;
+
+	if(!eyeFileArchive('compress',$params)){
+		eyex('messageBox',array('content'=>'Compression failed'));
+		return false;
+	}
+	eyeFiles('update',array(dirname($dest)));
+	eyex('messageBox',array('content'=>'Compressed successfully'));
+}
+?>

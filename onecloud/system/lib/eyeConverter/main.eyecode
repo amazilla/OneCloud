@@ -1,0 +1,82 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function lib_eyeConverter_convert($params) {
+
+	if($params == null || count($params) < 3){
+		errorCodes('setErrorCode',array(INCORRECT_PARAMS));
+		return false;
+	}
+
+	$orig = $params[0];
+	$dest = $params[1];
+	$format = $params[2];
+
+	if(isset($params[3])) {
+		$useReal = $params[3];
+	} else {
+		$useReal = false;
+	}
+
+	if (isset($params[4])) {
+		$args = ' ' . trim(strval($params[4]));
+	} else {
+		$args = '';
+	}
+
+	if(!vfs('real_checkPermissions',array($orig)) && !vfs('checkPermissions',array($orig))) {
+		errorCodes('setErrorCode',array(VFS_INSUFFICIENT_PERMISSIONS));
+		return false;
+	}
+
+	if(!vfs('real_checkPermissions',array($dest)) && !vfs('checkPermissions',array($dest))) {
+		errorCodes('setErrorCode',array(VFS_INSUFFICIENT_PERMISSIONS));
+		return false;
+	}
+
+	if (!$useReal) {
+		$orig = vfs('getRealName', array($orig));
+	}
+
+	$orig = realpath(dirname($orig)) . DIRECTORY_SEPARATOR . basename($orig);
+	$dest = realpath(dirname($dest)) . DIRECTORY_SEPARATOR . basename($dest);
+
+	if ($format === 'MS Word 97') {
+		$format = 'doc';
+	} else if ($format === 'HTML (StarWriter)') {
+		$format = 'html';
+	} else if ($format === 'calc8') {
+		$format = 'ods';
+	} else if ($format === 'writerglobal8_writer') {
+		$format = 'odt';
+	} else if ($format === 'MS Excel 97') {
+		$format = 'xls';
+	} else {
+		$format = escapeshellarg($format);
+	}
+
+	$args = ' --format=' . $format . ' --output=' . escapeshellarg($dest) . $args;
+	shell_exec(escapeshellarg(OFFICE_PYTHON_PATH) . ' ' . escapeshellarg(realpath(EYE_ROOT . '/extras/unoconv/unoconv')) . $args . ' ' . escapeshellarg($orig));
+	return file_exists($dest);
+}
+
+function lib_eyeConverter_cleanTmp(){
+	global $myPid;
+	$udir = um('getCurrentUserDir').'/tmp/';
+	$filesToClean = vfs('real_getDircontent',array($udir,'*'.$myPid.'*'));
+	foreach($filesToClean as $file){
+		vfs('real_delete',array($file));
+	}
+}
+?>

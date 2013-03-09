@@ -1,0 +1,39 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function eyeVisor_run($params=null) {
+	global $checknum;
+	$file = $params[0];
+	$myHidden = new Hidden(array('name'=>'vPath','father'=>'eyeApps','text'=>$file));
+	eyeWidgets('serialize',array($myHidden));
+
+	$myWindow = new Window(array('name'=>'eyeVisorWND','father'=>'eyeApps',
+	'cent'=>1,'width'=>600,'height'=>600,'title'=>basename($file).' - eyeVisor','sendResizeMsg'=>1,'sigResize'=>'Resize','removeWin'=>0,'savePosition' => 1));
+	$myWindow->show();
+	$myToolbar = new Toolbar(array('name'=>'myBar','father'=>'eyeVisorWND_Content'));
+	$myToolbar->show();
+	$myToolbar->addItem('Edit','index.php?theme=' . $_SESSION['usertheme'] . '&extern=images/toolbar/edit.png','Edit');
+	$myFrame = new Iframe(array('name'=>'eyeVisorFrame','father'=>'eyeVisorWND_Content','x'=>15,
+		'y'=>80,'height'=>$myWindow->height-110,'width'=>$myWindow->width-35,
+		'url'=>"index.php?checknum=".$checknum."&msg=getFile"));
+	$myFrame->show();
+	$myFrame->focus();
+}
+
+function eyeVisor_end($params=null) {
+	eyeConverter('cleanTmp');
+	eyeWidgets('unserialize');
+}
+
+?>

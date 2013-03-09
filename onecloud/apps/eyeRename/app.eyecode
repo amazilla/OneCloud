@@ -1,0 +1,28 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function eyeRename_run($params = '') {
+	include_once(EYE_ROOT . '/' . APP_DIR . '/eyeRename/events' . EYE_CODE_EXTENSION);
+	$file = basename($params[0]);
+	if (!$params[2]) {
+		$params[2] = $params[0];
+	}
+	$file2 = basename($params[2]);
+	eyeRename_libs_Do(substr(rtrim($params[0], '/'), 0, -strlen($file)), $file, substr(rtrim($params[2], '/'), 0, -strlen($file2)), $file2, $params[1]); // utf8
+}
+  
+function eyeRename_end($params = '') {
+	eyeWidgets('unserialize',$params);
+}
+?>

@@ -1,0 +1,36 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+$myImagebox = new Imagebox(array(
+	'father' => $simpleTab,
+	'name' => 'eyeUpload_simple_Imagebox',
+	'url' => 'index.php?theme=' . $_SESSION['usertheme'] . '&extern=icons/48x48/upload.png',
+	'x' => 22,
+	'y'=> 43
+));
+$myImagebox->show();
+
+$myFile = new File(array(
+	'callback' => 'simple_Do',
+	'father' => $simpleTab,
+	'filename' => 'myFile',
+	'multiple' => 1,
+	'name' => 'eyeUpload_simple_File',
+	'x' => 80,
+	'y' => 10
+));
+$myFile->show();
+$myFile->setHeight(190);
+$myFile->setWidth(375);
+?>

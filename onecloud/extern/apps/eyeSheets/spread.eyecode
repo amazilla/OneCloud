@@ -1,0 +1,28 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function get_dynamic_content($params = '') {
+	header('Content-type: text/html; charset=utf-8');
+	$content = file_get_contents(EYE_ROOT . '/' . EXTERN_DIR . '/' . APP_DIR . '/eyeSheets/spreadsheet_offline.html');
+	$content = str_replace('$myPid',$params[0],$content);
+	$content = str_replace('$checknum',$params[1],$content);
+	$lang = i18n('getLang');
+	if (!vfs('real_fileExists',array(EYE_ROOT . '/' . EXTERN_DIR . '/' . APP_DIR . '/eyeSheets/translations/' . $lang . '.js'))) {
+		$lang = 'en';
+	}
+	$content = str_replace('$userLang',$lang,$content);
+	$content = str_replace('$useCode',$params[2],$content);
+	return $content;
+}
+?>

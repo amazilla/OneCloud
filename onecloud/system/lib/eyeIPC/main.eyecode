@@ -1,0 +1,75 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+eyePear('Load', array('System_SharedMemory'));
+
+function lib_eyeIPC_setVar($params){
+	if($params == null || count($params) < 2){
+		errorCodes('setErrorCode',array(INCORRECT_PARAMS));
+		return false;
+	}
+
+	$name = $params[0];
+	$content = $params[1];
+	if(isset($params[2])){
+		$myClass =& System_SharedMemory::factory($params[2]);
+	}else{
+		$myClass =& System_SharedMemory::factory();
+	}
+	$myClass->set($name,$content);
+	return true;
+}
+
+function lib_eyeIPC_getVar($params){
+	if($params == null || count($params) < 1){
+		errorCodes('setErrorCode',array(INCORRECT_PARAMS));
+		return false;
+	}
+	$name = $params[0];
+	if(isset($params[1])){
+		$myClass =& System_SharedMemory::factory($params[1]);
+	}else{
+		$myClass =& System_SharedMemory::factory();
+	}
+	return $myClass->get($name);
+}
+
+function lib_eyeIPC_rmVar($params){
+	if($params == null || count($params) < 1){
+		errorCodes('setErrorCode',array(INCORRECT_PARAMS));
+		return false;
+	}
+	$name = $params[0];
+	if(isset($params[1])){
+		$myClass =& System_SharedMemory::factory($params[1]);
+	}else{
+		$myClass =& System_SharedMemory::factory();
+	}
+	$myClass->rm($name);
+	return true;
+}
+
+function lib_eyeIPC_isSet($params){
+	if($params == null || count($params) < 1){
+		errorCodes('setErrorCode',array(INCORRECT_PARAMS));
+		return false;
+	}
+	$name = $params[0];
+	if(isset($params[1])){
+		$myClass =& System_SharedMemory::factory($params[1]);
+	}else{
+		$myClass =& System_SharedMemory::factory();
+	}
+	return $myClass->isVar($name);
+}

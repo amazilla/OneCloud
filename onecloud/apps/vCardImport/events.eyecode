@@ -1,0 +1,38 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function vCardImport_on_Close($params = '') {
+	proc('end');
+}
+
+function vCardImport_on_Do($params = '') {
+	if (eyeAddressBook('importFromVcard',array($GLOBALS['vCardImport_Hidden']->text))) {
+		eyex('messageBox',array('content'=>'File Imported!'));
+		proc('end');
+	} else {
+		$error = errorCodes('getErrorCode');
+		if ($error == VFS_FILE_NOT_EXISTS) {
+			eyex('messageBox',array('content' => 'The file was not found!'));
+		} elseif ($error == NO_CONTACT_FOUND) {
+			eyex('messageBox',array('content' => 'No contacts were found in the file!'));
+		} else {
+			eyex('messageBox',array('content' => 'Error exporting file!'));
+		}
+	}
+}
+
+function vCardImport_on_Message($params = '') {
+	eyeWidgets('updateContent',$params);
+}
+?>

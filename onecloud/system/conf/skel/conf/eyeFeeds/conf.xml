@@ -1,0 +1,15 @@
+<eyeFeeds>
+	<base>
+		<feed>
+			<id>1</id>
+			<type>folder</type>
+			<name>OneCloud</name>
+			<feed>
+				<id>2</id>
+				<type>feed</type>
+				<name>Blog</name>
+				<url>http://www.amazilla.org/3/feed</url>
+			</feed>
+		</feed>
+	</base>
+</eyeFeeds>

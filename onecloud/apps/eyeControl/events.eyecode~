@@ -1,0 +1,48 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+global $currentUser;
+
+// Include all libraries
+$dir = EYE_ROOT . '/' . APP_DIR . '/eyeControl/libraries/';
+$oldUser = $currentUser;
+$currentUser = ROOTUSER;
+$openDir = vfs('real_getDirContent',array($dir,'*' . EYE_CODE_EXTENSION));
+$currentUser = $oldUser;
+foreach ($openDir as $file) {
+	include_once($file);
+}
+
+// Include all events
+$dir = EYE_ROOT . '/' . APP_DIR . '/eyeControl/events/';
+$oldUser = $currentUser;
+$currentUser = ROOTUSER;
+$openDir = vfs('real_getDirContent',array($dir,'*' . EYE_CODE_EXTENSION));
+$currentUser = $oldUser;
+foreach ($openDir as $file) {
+	include_once($file);
+}
+
+function eyeControl_on_help($params=null) {
+	proc('launch',array('eyeHelp','eyeControl'));
+}
+
+function eyeControl_on_Message($params = '') {
+	eyeWidgets('updateContent',$params);
+}
+
+function eyeControl_on_Close($params = '') {
+	proc('end');
+}
+?>

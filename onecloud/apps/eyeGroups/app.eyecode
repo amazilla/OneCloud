@@ -1,0 +1,26 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+function eyeGroups_run($params = '') {
+	if (!isset($params[0])) {
+		$params[0] = '/';
+	}
+	proc('launch',array('eyeFiles',array($params[0],'groups')));
+	proc('end');
+}
+
+function eyeGroups_end($params = '') {
+	eyeWidgets('unserialize');
+}
+?>

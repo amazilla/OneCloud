@@ -1,0 +1,43 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+global $checknum;
+global $sessionId;
+$myFlash = new Flash(array(
+	'father' => $advancedTab,
+	'flashParamsNames' => array(
+		'checknum',
+		'flashFix',
+		'flashvars',
+		'scriptUrl',
+		'sid',
+		'signal'
+	),
+	'flashParamsValues' => array(
+		$checknum,
+		FLASH_UPLOAD_FIX,
+		'autostart=yes&checknum=' . $checknum . '&flashFix=' . FLASH_UPLOAD_FIX . '&jscontrol=true&loop=no&scriptUrl=index.php&sid=' . $sessionId . '&signal=advanced_Do',
+		'index.php',
+		$sessionId,
+		'advanced_Do'
+	),
+	'height' => 200,
+	'name' => 'eyeUpload_advanced_Flash',
+	'src' => 'index.php?extern=apps/eyeUpload/swf/eyeuploadx.swf&type=swf',
+	'width' => 450,
+	'x' => 8,
+	'y' => 8
+));
+$myFlash->show();
+?>

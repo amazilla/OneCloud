@@ -1,0 +1,23 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+function eyeControl_on_cleantemp_do($params = '') {
+	global $currentUser;
+	if ($currentUser == ROOTUSER) {
+		eyeControl_lib_deleteDirContent(EYE_ROOT . '/' . EYEOS_TMP_DIR . '/');
+		eyex('messageBox',array('content' => 'Temporary files and folders successfully removed.'));
+		eyeControl_lib_loadContent('only_root','cleantemp');
+	}
+}
+?>

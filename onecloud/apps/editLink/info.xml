@@ -1,0 +1,10 @@
+<package>
+	<name>Edit Link</name>
+	<category>Core File Management</category>
+	<version>1.9</version>
+	<description>Utility to edit links</description>
+	<author>Amazilla</author>
+	<license>AGPL</license>
+	<type>Utility</type>
+	<icon />
+</package>

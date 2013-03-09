@@ -1,0 +1,21 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function xKill_on_Click($params = '') {
+	$pid = /* utf8 */ substr($params['arg0'][0], 0, 5);
+	proc('close',array($pid));
+	eyex('rawjs',array('js' => 'EventHandler.Remove("click","xKill"); document.getElementById("eyeApps").style.cursor = "auto";'));
+	proc('end');
+}
+?>

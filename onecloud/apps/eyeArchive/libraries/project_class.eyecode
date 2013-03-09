@@ -1,0 +1,71 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+class project{
+	var $workPath;
+	var $files;
+	var	$type;
+	var $src;
+
+	function project($params){
+			if(isset($params['files']) && is_array($params['files'])){
+				$this->files = $params['files'];
+			}
+
+			if(isset($params['workPath']) && !empty($params['workPath'])){
+				$this->workPath = $params['workPath'];
+			}
+
+			if(isset($params['type']) && !empty($params['type'])){
+				$this->type = $params['type'];
+			}
+
+			if(isset($params['src']) && !empty($params['src'])){
+				$this->src = $params['src'];
+			}
+	}
+
+	function setWorkPath($dir){
+		$this->workPath = $dir;
+	}
+
+	function getWorkPath(){
+		return $this->workPath;
+	}
+
+	function addFile($file){
+		$this->files[] = $file;
+	}
+
+	function getFiles(){
+		return $this->files;
+	}
+
+	function getType(){
+		return $this->type;
+	}
+
+	function getFilesPath(){
+		return $this->files['path'];
+	}
+
+	function getFilesName(){
+		return $this->files['names'];
+	}
+
+	function getSrc(){
+		return $this->src;
+	}
+}
+?>

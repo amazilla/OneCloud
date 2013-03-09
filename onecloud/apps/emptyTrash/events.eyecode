@@ -1,0 +1,45 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+function emptyTrash_on_Close($params = '') {
+	proc('end');
+}
+
+function emptyTrash_on_Do($params = '') {
+	$path = um('getCurrentUserDir') . '/' . TRASH_USER_DIR . '/';
+	if ($GLOBALS['emptyTrash_Hidden_File']->text) {
+		$path .= substr($GLOBALS['emptyTrash_Hidden_File']->text, 0, -strlen('.' . EYEOS_TRASH_EXT)); // utf8
+		$files = array($path,$path . '.' . EYEOS_FILE_EXT,$path . '.' . EYEOS_INFO_EXT,$path . '.' . EYEOS_TRASH_EXT);
+	} else {
+		$files = vfs('real_getDirContent',array($path));
+	}
+	foreach ($files as $file) {
+		if ( /* utf8 */ substr(basename($file), 0, 1) !== '.') {
+			if (vfs('isdir',array($file))) {
+				vfs('rmdir',array($file));
+			} else {
+				vfs('real_delete',array($file));
+			}
+		}
+	}
+	if ($GLOBALS['emptyTrash_Hidden_Callback']->text) {
+		eyex('rawjs',array('js' => $GLOBALS['emptyTrash_Hidden_Callback']->text));
+	}
+	eyeFiles('update',array('trash:///'));
+	proc('end');
+}
+
+function emptyTrash_on_Message($params = '') {
+	eyeWidgets('updateContent',$params);
+}
+?>

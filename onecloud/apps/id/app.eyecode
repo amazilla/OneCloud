@@ -1,0 +1,32 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function id_run($params=null) {
+	global $currentUser;
+	$groups = um('getCurrentGroups');
+	$groupStr = "";
+	$first = 0;
+	foreach($groups as $group=>$value) {
+		if($first == 0) {
+			$groupStr .= $group;
+			$first = 1;
+		} else {
+			$groupStr .= ','.$group;
+		}
+	}
+	eyeX('print',array('user='.$currentUser.' groups='.$groupStr));
+	proc('end');
+}
+
+?>

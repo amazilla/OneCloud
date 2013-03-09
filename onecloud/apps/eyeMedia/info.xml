@@ -1,0 +1,11 @@
+<package>
+	<name>Media Player</name>
+	<category>Multimedia</category>
+	<version>1.9</version>
+	<description>OneCloud Media Player</description>
+	<author>Amazilla</author>
+	<license>AGPL</license>
+	<type>Application</type>
+	<icon>index.php?theme=USERTHEME&amp;extern=icons/48x48/eyeMedia.png</icon>
+	<openWith>1</openWith>
+</package>

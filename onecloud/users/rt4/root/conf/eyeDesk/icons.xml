@@ -1,0 +1,30 @@
+<icon>
+	<name>Address Book.eyeLink</name>
+	<x>30</x>
+	<y>30</y>
+</icon>
+<icon>
+	<name>Applications.eyeLink</name>
+	<x>30</x>
+	<y>118</y>
+</icon>
+<icon>
+	<name>Calendar.eyeLink</name>
+	<x>30</x>
+	<y>206</y>
+</icon>
+<icon>
+	<name>Home.eyeLink</name>
+	<x>30</x>
+	<y>294</y>
+</icon>
+<icon>
+	<name>RSS Feed Reader.eyeLink</name>
+	<x>30</x>
+	<y>382</y>
+</icon>
+<icon>
+	<name>Trash.eyeLink</name>
+	<x>30</x>
+	<y>470</y>
+</icon>

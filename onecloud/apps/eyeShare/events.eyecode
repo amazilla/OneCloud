@@ -1,0 +1,29 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+
+*/
+
+function eyeShare_on_Close($params = '') {
+	proc('end');
+}
+
+function eyeShare_on_Share($params = '') {
+	if ($GLOBALS['eyeShare_Hidden']->text) {
+		foreach (um('getCurrentGroups') as $group => $value) {
+			if ($GLOBALS['eyeShare_Checkbox_' . $group]->checked) {
+				proc('launch', array('eyePaste', array('groups://' . $group, 'path' => $GLOBALS['eyeShare_Hidden']->text)));
+			}
+		}
+	}
+	proc('end');
+}
+?>

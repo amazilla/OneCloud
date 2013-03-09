@@ -1,0 +1,47 @@
+<?php
+/*
+ __        ___  __        __        __  
+/  \ |\ | |__  /  ` |    /  \ |  | |  \ http://onecloud.amazilla.org
+\__/ | \| |___ \__, |___ \__/ \__/ |__/ help@amazilla.org
+                                        
+OneCloud is released under the GNU Affero General Public License Version 3 (AGPL3)
+ -> provided with this release in license.txt
+ -> or via web at www.gnu.org/licenses/agpl-3.0.txt
+
+Copyright © 2011 - 2012 Amazilla (help@amazilla.org)
+*/
+
+
+$ContentY = 10;
+$conf = eyeControl_lib_getXMLconfig(array('sec','conf.xml'));
+// Show full names
+$myLabel = new Label(array(
+	'name' => 'eyeControl_security_label_fullname',
+	'father' => $eyeContainer,
+	'x' => 20,
+	'y' => $ContentY + 3,
+	'text' => 'Protect Sessions by IP'
+));
+$myLabel->show();
+$myCheckbox = new Checkbox(array(
+	'name' => 'eyeControl_security_checkbox_fullname',
+	'father' => $eyeContainer,
+	'x' => 200,
+	'y' => $ContentY,
+	'text' => ' ',
+	'checked' => $conf['security'][0]['PROTECTED_IP_SESSIONS'][0]
+));
+$myCheckbox->show();
+$ContentY += 30;
+// Save Changes
+$myButton = new Button(array(
+	'name' => 'eyeControl_security_button_save',
+	'father' => $eyeContainer,
+	'x' => 50,
+	'y' => $ContentY,
+	'caption' => 'Save Changes',
+	'signal' => 'security_save'
+));
+$myButton->addFriend($myCheckbox);
+$myButton->show();
+?>
